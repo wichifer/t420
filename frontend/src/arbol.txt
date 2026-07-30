@@ -1,0 +1,426 @@
+Listado de rutas de carpetas
+El n£mero de serie del volumen es 4829-F88C
+C:.
+³   App.css
+³   App.tsx
+³   arbol.txt
+³   index.css
+³   main.tsx
+³   
+ÃÄÄÄapi
+³       api.ts
+³       
+ÃÄÄÄassets
+³       hero.png
+³       react.svg
+³       vite.svg
+³       
+ÃÄÄÄcomponents
+³   ³   GlobalLoading.tsx
+³   ³   ModeToggle.tsx
+³   ³   
+³   ÃÄÄÄauth
+³   ³       ProtectedRoute.tsx
+³   ³       
+³   ÃÄÄÄcommon
+³   ³       ConfirmDialog.tsx
+³   ³       DataTable.tsx
+³   ³       EmptyState.tsx
+³   ³       ErrorState.tsx
+³   ³       Loading.tsx
+³   ³       LoadingState.tsx
+³   ³       Logo.tsx
+³   ³       MovementTypeBadge.tsx
+³   ³       PageHeader.tsx
+³   ³       PageTitle.tsx
+³   ³       SearchInput.tsx
+³   ³       SearchModal.tsx
+³   ³       Section.tsx
+³   ³       SectionTitle.tsx
+³   ³       SkeletonCards.tsx
+³   ³       SkeletonForm.tsx
+³   ³       SkeletonTable.tsx
+³   ³       StatusBadge.tsx
+³   ³       StockProgress.tsx
+³   ³       StockStatusBadge.tsx
+³   ³       TableActions.tsx
+³   ³       TableLoader.tsx
+³   ³       UserMenu.tsx
+³   ³       
+³   ÃÄÄÄcrud
+³   ³       CrudEmpty.tsx
+³   ³       CrudTable.tsx
+³   ³       EntityActions.tsx
+³   ³       
+³   ÃÄÄÄenterprise-form
+³   ³       FormActions.tsx
+³   ³       
+³   ÃÄÄÄform
+³   ³       AppSelect.tsx
+³   ³       CheckboxField.tsx
+³   ³       ErrorMessage.tsx
+³   ³       Field.tsx
+³   ³       Form.tsx
+³   ³       FormRow.tsx
+³   ³       FormSection.tsx
+³   ³       index.ts
+³   ³       RequiredMark.tsx
+³   ³       RHFSwitchField.tsx
+³   ³       RHFTextField.tsx
+³   ³       SelectField.tsx
+³   ³       SwitchField.tsx
+³   ³       TextAreaField.tsx
+³   ³       TextField.tsx
+³   ³       
+³   ÃÄÄÄlayout
+³   ³       AppLayout.tsx
+³   ³       DashboardLayout.tsx
+³   ³       Header.tsx
+³   ³       Logo.tsx
+³   ³       MobileSidebar.tsx
+³   ³       navigation.ts
+³   ³       PageContainer.tsx
+³   ³       Sidebar.tsx
+³   ³       SidebarNav.tsx
+³   ³       UserMenu.tsx
+³   ³       
+³   ÃÄÄÄmodals
+³   ³       GlobalConfirmDialog.tsx
+³   ³       GlobalModal.tsx
+³   ³       
+³   ÃÄÄÄshared
+³   ÃÄÄÄtheme
+³   ³       ThemeProvider.tsx
+³   ³       ThemeToggle.tsx
+³   ³       
+³   ÀÄÄÄui
+³           alert-dialog.tsx
+³           avatar.tsx
+³           badge.tsx
+³           button.tsx
+³           card.tsx
+³           checkbox.tsx
+³           dialog.tsx
+³           drawer.tsx
+³           dropdown-menu.tsx
+³           input.tsx
+³           label.tsx
+³           page-header.tsx
+³           popover.tsx
+³           select.tsx
+³           separator.tsx
+³           sheet.tsx
+³           skeleton.tsx
+³           sonner.tsx
+³           switch.tsx
+³           table.tsx
+³           textarea.tsx
+³           
+ÃÄÄÄlayouts
+³       EmpresaLayout.tsx
+³       Header.tsx
+³       index.ts
+³       navigation.types.ts
+³       navigationEmpresa.ts
+³       navigationSaaS.ts
+³       PublicLayout.tsx
+³       SaaSLayout.tsx
+³       SidebarEmpresa.tsx
+³       SidebarSaaS.tsx
+³       
+ÃÄÄÄlib
+³       api.ts
+³       format.ts
+³       formatters.ts
+³       queryClient.ts
+³       utils.ts
+³       
+ÃÄÄÄmodules
+³   ÃÄÄÄadmin-saas
+³   ÃÄÄÄauth
+³   ³   ÃÄÄÄcomponents
+³   ³   ³       LoginForm.tsx
+³   ³   ³       
+³   ³   ÃÄÄÄhooks
+³   ³   ³       useLogin.ts
+³   ³   ³       useLogout.ts
+³   ³   ³       
+³   ³   ÃÄÄÄpages
+³   ³   ³       LoginPage.tsx
+³   ³   ³       
+³   ³   ÀÄÄÄstore
+³   ³           authStore.ts
+³   ³           
+³   ÃÄÄÄclientes
+³   ³   ÃÄÄÄcomponents
+³   ³   ³   ³   ClientDrawer.tsx
+³   ³   ³   ³   ClienteDetails.tsx
+³   ³   ³   ³   ClienteDetailsSkeleton.tsx
+³   ³   ³   ³   ClienteForm.tsx
+³   ³   ³   ³   ClienteFormFields.tsx
+³   ³   ³   ³   ClienteMovementBadge.tsx
+³   ³   ³   ³   ClientesTable.tsx
+³   ³   ³   ³   ClienteTypeBadge.tsx
+³   ³   ³   ³   ClienteUIController.tsx
+³   ³   ³   ³   ClientsTable.tsx
+³   ³   ³   ³   index.ts
+³   ³   ³   ³   
+³   ³   ³   ÃÄÄÄdrawers
+³   ³   ³   ³       ClienteDrawer.tsx
+³   ³   ³   ³       
+³   ³   ³   ÀÄÄÄmodals
+³   ³   ÃÄÄÄconstants
+³   ³   ³       client-movements.ts
+³   ³   ³       
+³   ³   ÃÄÄÄhooks
+³   ³   ³       index.ts
+³   ³   ³       useCliente.ts
+³   ³   ³       useClienteEstadoCuenta.ts
+³   ³   ³       useClientes.ts
+³   ³   ³       useCreateCliente.ts
+³   ³   ³       useDeleteCliente.ts
+³   ³   ³       useUpdateCliente.ts
+³   ³   ³       
+³   ³   ÃÄÄÄpages
+³   ³   ³       ClientesPage.tsx
+³   ³   ³       
+³   ³   ÃÄÄÄqueries
+³   ³   ³       clientes.keys.ts
+³   ³   ³       clients.queries.ts
+³   ³   ³       
+³   ³   ÃÄÄÄschemas
+³   ³   ³       cliente.schema.ts
+³   ³   ³       createCliente.schema.ts
+³   ³   ³       index.ts
+³   ³   ³       updateCliente.schema.ts
+³   ³   ³       
+³   ³   ÃÄÄÄservices
+³   ³   ³       clientes.service.ts
+³   ³   ³       
+³   ³   ÃÄÄÄstate
+³   ³   ³       useClienteDrawer.ts
+³   ³   ³       
+³   ³   ÃÄÄÄtypes
+³   ³   ³       cliente.ts
+³   ³   ³       
+³   ³   ÀÄÄÄutils
+³   ³           cliente.utils.ts
+³   ³           
+³   ÃÄÄÄdashboard
+³   ³   ÃÄÄÄcomponents
+³   ³   ³       DashboardCard.tsx
+³   ³   ³       DashboardCardSkeleton.tsx
+³   ³   ³       DashboardGrid.tsx
+³   ³   ³       DashboardGridSkeleton.tsx
+³   ³   ³       
+³   ³   ÃÄÄÄhooks
+³   ³   ³       useDashboard.ts
+³   ³   ³       
+³   ³   ÃÄÄÄpages
+³   ³   ³       DashboardPage.tsx
+³   ³   ³       
+³   ³   ÃÄÄÄqueries
+³   ³   ³       dashboard.keys.ts
+³   ³   ³       
+³   ³   ÃÄÄÄservices
+³   ³   ³       dashboard.service.ts
+³   ³   ³       
+³   ³   ÀÄÄÄtypes
+³   ³           dashboard.ts
+³   ³           
+³   ÃÄÄÄempresas
+³   ³   ÃÄÄÄcomponents
+³   ³   ³   ³   EmpresaForm.tsx
+³   ³   ³   ³   EmpresaFormFields.tsx
+³   ³   ³   ³   EmpresasTable.tsx
+³   ³   ³   ³   EmpresaStatusSwitch.tsx
+³   ³   ³   ³   EmpresaUIController.tsx
+³   ³   ³   ³   index.ts
+³   ³   ³   ³   
+³   ³   ³   ÃÄÄÄdrawers
+³   ³   ³   ³       EmpresaDrawer.tsx
+³   ³   ³   ³       
+³   ³   ³   ÀÄÄÄmodals
+³   ³   ³           EmpresaModalDelete.tsx
+³   ³   ³           
+³   ³   ÃÄÄÄhooks
+³   ³   ³       useCreateEmpresa.ts
+³   ³   ³       useDeleteEmpresa.ts
+³   ³   ³       useEmpresa.ts
+³   ³   ³       useEmpresaById.ts
+³   ³   ³       useEmpresas.ts
+³   ³   ³       useUpdateEmpresa.ts
+³   ³   ³       useUpdateEmpresaStatus.ts
+³   ³   ³       
+³   ³   ÃÄÄÄpages
+³   ³   ³       EmpresaEditPage.tsx
+³   ³   ³       EmpresasPage.tsx
+³   ³   ³       
+³   ³   ÃÄÄÄqueries
+³   ³   ³       empresas.keys.ts
+³   ³   ³       
+³   ³   ÃÄÄÄschemas
+³   ³   ³       createEmpresa.schema.ts
+³   ³   ³       empresa.schema.ts
+³   ³   ³       empresaCreate.schema.ts
+³   ³   ³       empresaUpdate.schema.ts
+³   ³   ³       index.ts
+³   ³   ³       updateEmpresa.schema.ts
+³   ³   ³       
+³   ³   ÃÄÄÄservices
+³   ³   ³       empresas.service.ts
+³   ³   ³       
+³   ³   ÃÄÄÄstate
+³   ³   ³       useEmpresaDrawer.ts
+³   ³   ³       
+³   ³   ÀÄÄÄtypes
+³   ³           update-empresa.ts
+³   ³           
+³   ÃÄÄÄlanding
+³   ³   ÃÄÄÄcomponents
+³   ³   ³       CTA.tsx
+³   ³   ³       DashboardPreview.tsx
+³   ³   ³       FeatureCard.tsx
+³   ³   ³       Features.tsx
+³   ³   ³       Footer.tsx
+³   ³   ³       Hero.tsx
+³   ³   ³       
+³   ³   ÀÄÄÄpages
+³   ³           LandingPage.tsx
+³   ³           
+³   ÃÄÄÄorders
+³   ³   ÃÄÄÄcomponents
+³   ³   ³       OrderColumns.tsx
+³   ³   ³       OrderDetails.tsx
+³   ³   ³       OrderDrawer.tsx
+³   ³   ³       OrderForm.tsx
+³   ³   ³       OrderFormFields.tsx
+³   ³   ³       OrderItemsTable.tsx
+³   ³   ³       OrdersTable.tsx
+³   ³   ³       OrderStatusBadge.tsx
+³   ³   ³       
+³   ³   ÃÄÄÄhooks
+³   ³   ³       useOrderDrawer.ts
+³   ³   ³       useOrders.ts
+³   ³   ³       
+³   ³   ÃÄÄÄpages
+³   ³   ³       OrdersPage.tsx
+³   ³   ³       
+³   ³   ÃÄÄÄqueries
+³   ³   ³       orders.keys.ts
+³   ³   ³       orders.queries.ts
+³   ³   ³       
+³   ³   ÃÄÄÄservices
+³   ³   ³       orders.service.ts
+³   ³   ³       
+³   ³   ÀÄÄÄtypes
+³   ³           order.ts
+³   ³           
+³   ÃÄÄÄproducts
+³   ³   ÃÄÄÄcomponents
+³   ³   ³       ProductDrawer.tsx
+³   ³   ³       ProductForm.tsx
+³   ³   ³       ProductsTable.tsx
+³   ³   ³       
+³   ³   ÃÄÄÄhooks
+³   ³   ³       useCreateProduct.ts
+³   ³   ³       useDeleteProduct.ts
+³   ³   ³       useProducts.ts
+³   ³   ³       useProductTest.ts
+³   ³   ³       useUpdateProduct.ts
+³   ³   ³       
+³   ³   ÃÄÄÄpages
+³   ³   ³       ProductsPage.tsx
+³   ³   ³       
+³   ³   ÃÄÄÄqueries
+³   ³   ³       products.keys.ts
+³   ³   ³       
+³   ³   ÃÄÄÄservices
+³   ³   ³       products.service.ts
+³   ³   ³       
+³   ³   ÃÄÄÄstate
+³   ³   ³       useProductDrawer.ts
+³   ³   ³       
+³   ³   ÀÄÄÄtypes
+³   ³           product.ts
+³   ³           
+³   ÃÄÄÄreports
+³   ³   ÃÄÄÄcomponents
+³   ³   ³       DebtorsCard.tsx
+³   ³   ³       ReportsKpis.tsx
+³   ³   ³       SalesByClientCard.tsx
+³   ³   ³       TopProductsCard.tsx
+³   ³   ³       
+³   ³   ÃÄÄÄhooks
+³   ³   ³       useReports.ts
+³   ³   ³       
+³   ³   ÃÄÄÄpages
+³   ³   ³       ReportsPage.tsx
+³   ³   ³       
+³   ³   ÃÄÄÄservices
+³   ³   ³       reports.service.ts
+³   ³   ³       
+³   ³   ÀÄÄÄtypes
+³   ³           reports.types.ts
+³   ³           
+³   ÀÄÄÄstock
+³       ÃÄÄÄcomponents
+³       ³       CriticalStockCard.tsx
+³       ³       StockFilters.tsx
+³       ³       StockKpis.tsx
+³       ³       StockMovementDetails.tsx
+³       ³       StockMovementDrawer.tsx
+³       ³       StockMovementForm.tsx
+³       ³       StockMovementsTable.tsx
+³       ³       
+³       ÃÄÄÄhooks
+³       ³       useStock.ts
+³       ³       useStockMovementDrawer.ts
+³       ³       
+³       ÃÄÄÄpages
+³       ³       StockPage.tsx
+³       ³       
+³       ÃÄÄÄqueries
+³       ³       stock.keys.ts
+³       ³       
+³       ÃÄÄÄservices
+³       ³       stock.service.ts
+³       ³       
+³       ÀÄÄÄtypes
+³               stock.types.ts
+³               
+ÃÄÄÄpages
+³       Audit.tsx
+³       Cash.tsx
+³       Clients.tsx
+³       CreateClient.tsx
+³       CreateOrder.tsx
+³       Dashboard.tsx
+³       EditClient.tsx
+³       Forbidden.tsx
+³       Landing.tsx
+³       Login.tsx
+³       LowStock.tsx
+³       NotFound.tsx
+³       OrderDetail.tsx
+³       Orders.tsx
+³       Payments.tsx
+³       Playground.tsx
+³       Reports.tsx
+³       StockMovements.tsx
+³       
+ÃÄÄÄpublic
+ÃÄÄÄroutes
+³       EmpresaRoutes.tsx
+³       index.tsx
+³       publicRoutes.tsx
+³       SaaSRoutes.tsx
+³       
+ÃÄÄÄstore
+³       confirmStore.ts
+³       loadingStore.ts
+³       modalStore.ts
+³       
+ÀÄÄÄtypes
+        empresa.ts
+        
