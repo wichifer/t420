@@ -7,8 +7,7 @@ import {
   Wallet,
   Boxes,
   BarChart3,
-  ClipboardList,
-} from "lucide-react";
+ } from "lucide-react";
 
 export interface NavigationItem {
   label: string;

@@ -34,7 +34,8 @@ function Badge({
   ...props
 }: React.ComponentProps<"span"> &
   VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot.Root : "span"
+
+  const Comp = asChild ? Slot : "span";
 
   return (
     <Comp
@@ -43,7 +44,7 @@ function Badge({
       className={cn(badgeVariants({ variant }), className)}
       {...props}
     />
-  )
+  );
 }
 
 export { Badge, badgeVariants }

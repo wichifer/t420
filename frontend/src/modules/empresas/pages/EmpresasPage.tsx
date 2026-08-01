@@ -16,7 +16,7 @@ import { useDeleteEmpresa } from "../hooks/useDeleteEmpresa";
 import { useEmpresaDrawer } from "../state/useEmpresaDrawer";
 
 import type { Empresa } from "@/types/empresa";
-import { toast } from "sonner";
+
 
 export default function EmpresasPage() {
   const { data: empresas = [], isLoading, error } = useEmpresas();

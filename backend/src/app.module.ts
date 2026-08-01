@@ -25,6 +25,7 @@ import { CashModule } from './cash/cash.module';
 
 //import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AdminSaasModule } from './admin-saas/admin-saas.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
 
@@ -46,6 +47,7 @@ import { AdminSaasModule } from './admin-saas/admin-saas.module';
   ReportsModule,
   CashModule,
   AdminSaasModule,
+  HealthModule,
 
 ],
   controllers: [AppController],

@@ -76,14 +76,9 @@ const handleAddProduct = (product: Product) => {
   }
 };
 
-  const items = watch("items") || [];
+ 
 
-  // Calcular total
-  const total = items.reduce((acc, item) => {
-    const cantidad = Number(item.cantidad) || 0;
-    const precio = Number(item.precio_unitario) || 0;
-    return acc + cantidad * precio;
-  }, 0);
+
 
   return (
     <>

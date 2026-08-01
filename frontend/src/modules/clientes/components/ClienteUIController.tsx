@@ -3,15 +3,13 @@
 import { useClienteDrawer } from "../state/useClienteDrawer";
 
 import { ClienteDrawer } from "./drawers/ClienteDrawer";
-// import { ClienteModalDelete } from "./modals/ClienteModalDelete";
+
 
 export function ClienteUIController() {
 
   const {
     open,
-    mode,
-    selected,
-    close,
+ 
   } = useClienteDrawer();
 
   if (!open)
