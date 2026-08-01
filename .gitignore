@@ -2,6 +2,8 @@
 # Node
 # ===========================
 node_modules/
+.npm/
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -13,7 +15,10 @@ pnpm-debug.log*
 dist/
 build/
 coverage/
+.vite/
+
 *.tsbuildinfo
+.eslintcache
 
 # ===========================
 # Environment
@@ -46,11 +51,19 @@ uploads/
 Thumbs.db
 
 # ===========================
-# Prisma
+# Databases
 # ===========================
-dev.db
+*.db
+*.sqlite
+*.sqlite3
 
 # ===========================
 # Docker
 # ===========================
 docker-data/
+
+# ===========================
+# Temp
+# ===========================
+*.tmp
+*.temp
