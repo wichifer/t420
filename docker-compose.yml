@@ -69,7 +69,6 @@ services:
 
 
   nginx:
-
     build:
       context: .
       dockerfile: nginx/Dockerfile
@@ -82,6 +81,12 @@ services:
 
     ports:
       - "80:80"
+      - "443:443"
+
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
 
     networks:
       - t420-network
