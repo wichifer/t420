@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 
 import { Header } from "@/components/layout/Header";
 import SidebarEmpresa from "./SidebarEmpresa";
+import { navigationEmpresa } from "./navigationEmpresa";
 
 export default function EmpresaLayout() {
   return (
@@ -9,7 +10,7 @@ export default function EmpresaLayout() {
       <SidebarEmpresa />
 
       <div className="flex-1 flex flex-col min-w-0">
-        <Header />
+        <Header items={navigationEmpresa} />
 
         <main className="flex-1 p-6 min-h-0">
           <Outlet />

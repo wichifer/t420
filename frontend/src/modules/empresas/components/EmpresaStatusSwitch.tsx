@@ -39,11 +39,28 @@ export function EmpresaStatusSwitch({
     });
   };
 
-  return (
-    <Switch
-      checked={empresa.estado}
-      disabled={mutation.isPending}
-      onCheckedChange={handleChange}
-    />
-  );
+return (
+  <div className="flex items-center gap-2">
+<Switch
+  checked={empresa.estado}
+  disabled={mutation.isPending}
+  onCheckedChange={handleChange}
+  className={
+    empresa.estado
+      ? "data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+      : "data-[state=unchecked]:bg-red-600 data-[state=unchecked]:border-red-600"
+  }
+/>
+
+    <span
+      className={
+        empresa.estado
+          ? "text-sm text-green-600 font-medium"
+          : "text-sm text-red-600 font-medium"
+      }
+    >
+      {empresa.estado ? "Activa" : "Suspendida"}
+    </span>
+  </div>
+);
 }

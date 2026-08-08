@@ -1,8 +1,11 @@
-/* src/components/layout/Sidebar.tsx*/
-
 import SidebarNav from "./SidebarNav";
+import type { NavigationItem } from "./navigation";
 
-export default function Sidebar() {
+interface Props {
+  items: NavigationItem[];
+}
+
+export default function Sidebar({ items }: Props) {
   return (
     <aside
       className="
@@ -21,7 +24,7 @@ export default function Sidebar() {
         </span>
       </div>
 
-      <SidebarNav />
+      <SidebarNav items={items} />
     </aside>
   );
 }

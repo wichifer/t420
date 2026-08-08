@@ -8,8 +8,13 @@ import {
 } from "@/components/ui/sheet";
 
 import SidebarNav from "./SidebarNav";
+import type { NavigationItem } from "./navigation";
 
-export default function MobileSidebar() {
+interface Props {
+  items: NavigationItem[];
+}
+
+export default function MobileSidebar({ items }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -25,7 +30,10 @@ export default function MobileSidebar() {
           SaaS T420
         </div>
 
-        <SidebarNav onNavigate={() => setOpen(false)} />
+        <SidebarNav
+          items={items}
+          onNavigate={() => setOpen(false)}
+        />
       </SheetContent>
     </Sheet>
   );

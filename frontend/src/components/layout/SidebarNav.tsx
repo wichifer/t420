@@ -1,15 +1,16 @@
 import { NavLink } from "react-router-dom";
-import { navigation } from "./navigation";
 import { cn } from "@/lib/utils";
+import type { NavigationItem } from "./navigation";
 
 interface Props {
+  items: NavigationItem[];
   onNavigate?: () => void;
 }
 
-export default function SidebarNav({ onNavigate }: Props) {
+export default function SidebarNav({ items, onNavigate }: Props) {
   return (
     <nav className="flex-1 p-2 space-y-1">
-      {navigation.map((item) => {
+      {items.map((item) => {
         const Icon = item.icon;
 
         return (

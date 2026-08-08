@@ -1,16 +1,16 @@
 import MobileSidebar from "./MobileSidebar";
+import type { NavigationItem } from "./navigation";
 
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
-
 import UserMenu from "@/components/common/UserMenu";
-
 import { Button } from "@/components/ui/button";
 
+interface Props {
+  items: NavigationItem[];
+}
 
-export function Header() {
-
+export function Header({ items }: Props) {
   return (
-
     <header
       className="
         h-14
@@ -23,8 +23,6 @@ export function Header() {
         px-4
       "
     >
-
-
       <div
         className="
           flex
@@ -32,9 +30,7 @@ export function Header() {
           gap-3
         "
       >
-
-        <MobileSidebar />
-
+        <MobileSidebar items={items} />
 
         <span
           className="
@@ -42,15 +38,9 @@ export function Header() {
             text-sm
           "
         >
-
           SaaS T420
-
         </span>
-
-
       </div>
-
-
 
       <div
         className="
@@ -60,12 +50,8 @@ export function Header() {
           text-muted-foreground
         "
       >
-
         Dashboard
-
       </div>
-
-
 
       <div
         className="
@@ -74,7 +60,6 @@ export function Header() {
           gap-2
         "
       >
-
         <Button
           variant="ghost"
           size="icon"
@@ -82,18 +67,10 @@ export function Header() {
           🔔
         </Button>
 
-
         <ThemeToggle />
 
-
         <UserMenu />
-
-
       </div>
-
-
     </header>
-
   );
-
 }
