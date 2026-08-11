@@ -153,7 +153,30 @@ export class OrdersService {
       });
 
 
-    return orden;
+      if (!orden) {
+        throw new NotFoundException('Orden no encontrada');
+      }
+
+      return {
+        ...orden,
+
+        cliente: orden.clientes
+          ? {
+              id_cliente: Number(orden.clientes.id_cliente),
+              nombre: orden.clientes.nombre,
+              razon_social: orden.clientes.razon_social,
+            }
+          : null,
+
+        items: orden.detalle_orden_compra.map((item) => ({
+          id_detalle_orden: Number(item.id_detalle_orden),
+          id_articulo: Number(item.id_articulo),
+          descripcion_articulo: item.descripcion_articulo,
+          cantidad: Number(item.cantidad),
+          precio_unitario: Number(item.precio_unitario),
+          subtotal: Number(item.subtotal),
+        })),
+      };
 
   }
 
