@@ -1,5 +1,4 @@
-// C:\dev\ordenes-saas-frontend\src\modules\products\components\ProductForm.tsx
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useCreateProduct } from "../hooks/useCreateProduct";
 import { useUpdateProduct } from "../hooks/useUpdateProduct";
 import type { Product } from "../types/product";
+import { BarcodeScanner } from "./BarcodeScanner";
 
 interface Props {
   product?: Product | null;
@@ -24,10 +24,19 @@ type FormValues = {
 };
 
 export function ProductForm({ product, onSuccess }: Props) {
+  console.log("🔥 PRODUCT FORM CORRECTO 🔥");
+
   const createProduct = useCreateProduct();
   const updateProduct = useUpdateProduct();
 
-  const { register, handleSubmit, reset } = useForm<FormValues>({
+  const [scannerOpen, setScannerOpen] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+  } = useForm<FormValues>({
     defaultValues: {
       codigo: "",
       descripcion: "",
@@ -39,7 +48,8 @@ export function ProductForm({ product, onSuccess }: Props) {
 
   useEffect(() => {
     if (product) {
-     console.log("FORM PRODUCT:", product);
+      console.log("FORM PRODUCT:", product);
+
       reset({
         codigo: product.codigo,
         descripcion: product.descripcion,
@@ -47,36 +57,98 @@ export function ProductForm({ product, onSuccess }: Props) {
         stock_actual: Number(product.stock_actual),
         stock_minimo: Number(product.stock_minimo),
       });
+    } else {
+      reset({
+        codigo: "",
+        descripcion: "",
+        precio_final: 0,
+        stock_actual: 0,
+        stock_minimo: 0,
+      });
     }
   }, [product, reset]);
 
   const onSubmit = async (data: FormValues) => {
-    if (product) {
-      await updateProduct.mutateAsync({
-        id: Number(product.id_articulo),
-        payload: data,
-      });
-    } else {
-      await createProduct.mutateAsync(data);
-    }
+    try {
+      if (product) {
+        await updateProduct.mutateAsync({
+          id: Number(product.id_articulo),
+          payload: data,
+        });
+      } else {
+        await createProduct.mutateAsync(data);
+      }
 
-    onSuccess?.();
-    reset();
+      setScannerOpen(false);
+      onSuccess?.();
+      reset();
+    } catch (error) {
+      console.error("ERROR GUARDANDO PRODUCTO:", error);
+    }
+  };
+
+const handleBarcodeDetected = useCallback(
+  (code: string) => {
+    console.log("📦 CODIGO RECIBIDO EN PRODUCT FORM:", code);
+
+    setValue("codigo", code, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+
+    console.log("📷 CERRANDO SCANNER");
+
+    setScannerOpen(false);
+  },
+  [setValue],
+);
+
+  const handleScannerClose = () => {
+    console.log("📷 CERRANDO SCANNER");
+
+    setScannerOpen(false);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {/* CÓDIGO */}
       <div>
         <Label htmlFor="codigo">Código</Label>
-        <Input
-          id="codigo"
-          {...register("codigo")}
-          required
-        />
+
+        <div className="mt-1 flex gap-2">
+          <Input
+            id="codigo"
+            {...register("codigo")}
+            required
+          />
+
+          {!product && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                console.log("📷 ABRIENDO SCANNER");
+                setScannerOpen(true);
+              }}
+            >
+              📷 Escanear
+            </Button>
+          )}
+        </div>
       </div>
 
+      {/* SCANNER */}
+      {scannerOpen && (
+        <BarcodeScanner
+          onDetected={handleBarcodeDetected}
+          onClose={handleScannerClose}
+        />
+      )}
+
+      {/* DESCRIPCIÓN */}
       <div>
         <Label htmlFor="descripcion">Descripción</Label>
+
         <Input
           id="descripcion"
           {...register("descripcion")}
@@ -84,9 +156,11 @@ export function ProductForm({ product, onSuccess }: Props) {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* DATOS DEL PRODUCTO */}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div>
           <Label htmlFor="precio_final">Precio</Label>
+
           <Input
             id="precio_final"
             type="number"
@@ -100,6 +174,7 @@ export function ProductForm({ product, onSuccess }: Props) {
 
         <div>
           <Label htmlFor="stock_actual">Stock actual</Label>
+
           <Input
             id="stock_actual"
             type="number"
@@ -112,6 +187,7 @@ export function ProductForm({ product, onSuccess }: Props) {
 
         <div>
           <Label htmlFor="stock_minimo">Stock mínimo</Label>
+
           <Input
             id="stock_minimo"
             type="number"
@@ -123,12 +199,13 @@ export function ProductForm({ product, onSuccess }: Props) {
         </div>
       </div>
 
+      {/* BOTÓN GUARDAR */}
       <div className="flex justify-end">
         <Button
           type="submit"
-          onClick={() => console.log("CLICK")}
           disabled={
-            createProduct.isPending || updateProduct.isPending
+            createProduct.isPending ||
+            updateProduct.isPending
           }
         >
           {product ? "Actualizar" : "Crear"} producto
