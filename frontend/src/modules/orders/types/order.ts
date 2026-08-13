@@ -30,10 +30,19 @@ export interface Order {
   observaciones?: string | null;
 
 cliente?: {
-    id_cliente: number;
-    nombre?: string | null;
-    razon_social?: string | null;
-  } | null;
+  id_cliente: number;
+  nombre?: string | null;
+  apellido?: string | null;
+  razon_social?: string | null;
+} | null;
+
+clientes?: {
+  id_cliente: string;
+  id_empresa: string;
+  nombre?: string | null;
+  apellido?: string | null;
+  razon_social?: string | null;
+} | null;
 
   items?: OrderItem[];
 }

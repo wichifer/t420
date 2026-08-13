@@ -4,7 +4,6 @@ import { TableActions } from "@/components/common/TableActions";
 import type { Order } from "../types/order";
 import { useOrderDrawer } from "../hooks/useOrderDrawer";
 
-
 import { OrderStatusBadge } from "./OrderStatusBadge";
 
 import {
@@ -14,54 +13,50 @@ import {
 } from "../queries/orders.queries";
 
 export function useOrderColumns(): Column<Order>[] {
-
   const drawer = useOrderDrawer();
 
   const approveMutation = useApproveOrder();
-
   const deleteMutation = useDeleteOrder();
-  
   const cancelMutation = useCancelOrder();
 
-    return [
+  return [
+    {
+      key: "numero_orden",
+      header: "Número",
 
-      {
-        key: "numero_orden",
-        header: "Número",
+      render: (order) => (
+        <div className="font-medium">
+          {order.numero_orden}
+        </div>
+      ),
+    },
 
-        render: (order) => (
-          <div className="font-medium">
-            {order.numero_orden}
-          </div>
-        ),
-      },
+    {
+      key: "fecha",
+      header: "Fecha",
 
-      {
-        key: "fecha",
-        header: "Fecha",
+      render: (order) => (
+        <div className="text-sm">
+          {new Date(order.fecha).toLocaleDateString()}
+        </div>
+      ),
+    },
 
-        render: (order) => (
-          <div className="text-sm">
-            {new Date(order.fecha).toLocaleDateString()}
-          </div>
-        ),
-      },
+    {
+      key: "cliente",
+      header: "Cliente",
 
-    
-{
-  key: "cliente",
-  header: "Cliente",
+      render: (order) => (
+        <div>
+          {typeof order.cliente === "string"
+            ? order.cliente
+            : order.cliente?.razon_social ??
+              order.cliente?.nombre ??
+              "-"}
+        </div>
+      ),
+    },
 
-  render: (order) => (
-    <div className="font-medium">
-      {typeof order.cliente === "string"
-        ? order.cliente
-        : order.cliente?.razon_social ??
-          order.cliente?.nombre ??
-          "-"}
-    </div>
-  ),
-},
     {
       key: "estado",
       header: "Estado",
@@ -76,11 +71,14 @@ export function useOrderColumns(): Column<Order>[] {
       header: "Total",
       className: "text-right",
 
-render: (order) => (
-  <div className="text-right font-semibold">
-    ${Number(order.total).toFixed(2)}
-  </div>
-),
+      render: (order) => (
+        <div className="text-right font-medium">
+          ${Number(order.total).toLocaleString("es-AR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
+        </div>
+      ),
     },
 
     {
@@ -97,7 +95,9 @@ render: (order) => (
           onEdit={
             order.estado === "PENDIENTE"
               ? () =>
-                  drawer.openEdit(order.id_orden_compra)
+                  drawer.openEdit(
+                    order.id_orden_compra
+                  )
               : undefined
           }
 
@@ -118,6 +118,7 @@ render: (order) => (
                   )
               : undefined
           }
+
           onCancel={
             order.estado === "APROBADA"
               ? () =>
@@ -129,7 +130,5 @@ render: (order) => (
         />
       ),
     },
-
   ];
-
 }
