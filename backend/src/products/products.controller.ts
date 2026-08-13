@@ -40,16 +40,22 @@ export class ProductsController {
     );
 
   }
-@Get('low-stock')
-lowStock(
-  @Req() request: any,
-) {
+  @Get('low-stock')
+  lowStock(
+    @Req() request: any,
+  ) {
 
-  return this.productsService.lowStock(
-    request.user.id_empresa,
-  );
+    return this.productsService.lowStock(
+      request.user.id_empresa,
+    );
 
-}
+  }
+  @Get('barcode/:code')
+  findByBarcode(
+    @Param('code') code: string,
+  ) {
+    return this.productsService.findByBarcode(code);
+  }
   @Get(':id')
   findOne(
 

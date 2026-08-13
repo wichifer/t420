@@ -259,6 +259,94 @@ if (data.codigo) {
     };
 
   }
+async findByBarcode(code: string) {
+  const barcode = code.trim();
+
+  if (!barcode) {
+    throw new BadRequestException(
+      'Código de barras inválido',
+    );
+  }
+
+  try {
+    const response = await fetch(
+      `https://world.openfoodfacts.org/api/v2/product/${encodeURIComponent(
+        barcode,
+      )}.json?fields=code,product_name,generic_name,brands,quantity`,
+      {
+        headers: {
+          'User-Agent': 'T420/1.0 (https://t420.online)',
+        },
+      },
+    );
+
+    if (!response.ok) {
+      console.log(
+        'Open Food Facts HTTP:',
+        response.status,
+        barcode,
+      );
+
+      return {
+        found: false,
+        code: barcode,
+      };
+    }
+
+    const data = await response.json();
+
+    console.log(
+      'Open Food Facts:',
+      barcode,
+      data.status,
+      data.product,
+    );
+
+    if (
+      data.status !== 1 ||
+      !data.product
+    ) {
+      return {
+        found: false,
+        code: barcode,
+      };
+    }
+
+    const product = data.product;
+
+    return {
+      found: true,
+
+      code:
+        product.code ??
+        barcode,
+
+      description:
+        product.product_name ??
+        product.generic_name ??
+        '',
+
+      brand:
+        product.brands ??
+        '',
+
+      quantity:
+        product.quantity ??
+        '',
+    };
+
+  } catch (error) {
+    console.error(
+      'Error consultando Open Food Facts:',
+      error,
+    );
+
+    return {
+      found: false,
+      code: barcode,
+    };
+  }
+}
 async lowStock(
   id_empresa: string,
 ) {
