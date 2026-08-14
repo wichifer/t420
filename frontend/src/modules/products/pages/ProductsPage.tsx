@@ -1,3 +1,4 @@
+// C:\dev\t420\frontend\src\modules\products\pages\ProductsPage.tsx
 import { useMemo, useState } from "react";
 
 import PageHeader from "@/components/common/PageHeader";

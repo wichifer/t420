@@ -2,6 +2,14 @@ import { api } from "@/api/api";
 
 import type { Product } from "../types/product";
 
+export interface BarcodeProduct {
+  found: boolean;
+  code: string;
+  description?: string;
+  brand?: string;
+  quantity?: string;
+}
+
 export const productsService = {
 
   async getAll() {
@@ -15,6 +23,14 @@ export const productsService = {
   async getById(id: number) {
     const { data } = await api.get<Product>(
       `/products/${id}`,
+    );
+
+    return data;
+  },
+
+  async getByBarcode(code: string) {
+    const { data } = await api.get<BarcodeProduct>(
+      `/products/barcode/${encodeURIComponent(code)}`,
     );
 
     return data;

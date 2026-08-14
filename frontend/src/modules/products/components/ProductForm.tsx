@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useCreateProduct } from "../hooks/useCreateProduct";
 import { useUpdateProduct } from "../hooks/useUpdateProduct";
 import type { Product } from "../types/product";
+import { productsService } from "../services/products.service";
 import { BarcodeScanner } from "./BarcodeScanner";
 
 interface Props {
@@ -30,6 +31,7 @@ export function ProductForm({ product, onSuccess }: Props) {
   const updateProduct = useUpdateProduct();
 
   const [scannerOpen, setScannerOpen] = useState(false);
+  const [barcodeLoading, setBarcodeLoading] = useState(false);
 
   const {
     register,
@@ -87,21 +89,74 @@ export function ProductForm({ product, onSuccess }: Props) {
     }
   };
 
-const handleBarcodeDetected = useCallback(
-  (code: string) => {
-    console.log("📦 CODIGO RECIBIDO EN PRODUCT FORM:", code);
+  const handleBarcodeDetected = useCallback(
+    async (code: string) => {
+      console.log(
+        "📦 CODIGO RECIBIDO EN PRODUCT FORM:",
+        code,
+      );
 
-    setValue("codigo", code, {
-      shouldValidate: true,
-      shouldDirty: true,
-    });
+      // Primero cargamos el código inmediatamente
+      setValue("codigo", code, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
 
-    console.log("📷 CERRANDO SCANNER");
+      // Cerramos el scanner
+      console.log("📷 CERRANDO SCANNER");
 
-    setScannerOpen(false);
-  },
-  [setValue],
-);
+      setScannerOpen(false);
+
+      // Consultamos Open Food Facts a través del backend
+      try {
+        setBarcodeLoading(true);
+
+        console.log(
+          "🔎 CONSULTANDO PRODUCTO POR EAN:",
+          code,
+        );
+
+        const result =
+          await productsService.getByBarcode(code);
+
+        console.log(
+          "🍎 RESPUESTA OPEN FOOD FACTS:",
+          result,
+        );
+
+        if (
+          result.found &&
+          result.description
+        ) {
+          setValue(
+            "descripcion",
+            result.description,
+            {
+              shouldValidate: true,
+              shouldDirty: true,
+            },
+          );
+
+          console.log(
+            "✅ DESCRIPCIÓN COMPLETADA:",
+            result.description,
+          );
+        } else {
+          console.log(
+            "ℹ️ PRODUCTO NO ENCONTRADO EN OPEN FOOD FACTS",
+          );
+        }
+      } catch (error) {
+        console.error(
+          "❌ ERROR CONSULTANDO PRODUCTO POR EAN:",
+          error,
+        );
+      } finally {
+        setBarcodeLoading(false);
+      }
+    },
+    [setValue],
+  );
 
   const handleScannerClose = () => {
     console.log("📷 CERRANDO SCANNER");
@@ -110,10 +165,15 @@ const handleBarcodeDetected = useCallback(
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6"
+    >
       {/* CÓDIGO */}
       <div>
-        <Label htmlFor="codigo">Código</Label>
+        <Label htmlFor="codigo">
+          Código
+        </Label>
 
         <div className="mt-1 flex gap-2">
           <Input
@@ -127,9 +187,13 @@ const handleBarcodeDetected = useCallback(
               type="button"
               variant="outline"
               onClick={() => {
-                console.log("📷 ABRIENDO SCANNER");
+                console.log(
+                  "📷 ABRIENDO SCANNER",
+                );
+
                 setScannerOpen(true);
               }}
+              disabled={barcodeLoading}
             >
               📷 Escanear
             </Button>
@@ -145,9 +209,18 @@ const handleBarcodeDetected = useCallback(
         />
       )}
 
+      {/* CONSULTANDO */}
+      {barcodeLoading && (
+        <p className="text-sm text-muted-foreground">
+          Consultando información del producto...
+        </p>
+      )}
+
       {/* DESCRIPCIÓN */}
       <div>
-        <Label htmlFor="descripcion">Descripción</Label>
+        <Label htmlFor="descripcion">
+          Descripción
+        </Label>
 
         <Input
           id="descripcion"
@@ -159,7 +232,9 @@ const handleBarcodeDetected = useCallback(
       {/* DATOS DEL PRODUCTO */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div>
-          <Label htmlFor="precio_final">Precio</Label>
+          <Label htmlFor="precio_final">
+            Precio
+          </Label>
 
           <Input
             id="precio_final"
@@ -173,7 +248,9 @@ const handleBarcodeDetected = useCallback(
         </div>
 
         <div>
-          <Label htmlFor="stock_actual">Stock actual</Label>
+          <Label htmlFor="stock_actual">
+            Stock actual
+          </Label>
 
           <Input
             id="stock_actual"
@@ -186,7 +263,9 @@ const handleBarcodeDetected = useCallback(
         </div>
 
         <div>
-          <Label htmlFor="stock_minimo">Stock mínimo</Label>
+          <Label htmlFor="stock_minimo">
+            Stock mínimo
+          </Label>
 
           <Input
             id="stock_minimo"
@@ -205,7 +284,8 @@ const handleBarcodeDetected = useCallback(
           type="submit"
           disabled={
             createProduct.isPending ||
-            updateProduct.isPending
+            updateProduct.isPending ||
+            barcodeLoading
           }
         >
           {product ? "Actualizar" : "Crear"} producto
