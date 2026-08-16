@@ -39,7 +39,7 @@ export function BarcodeScanner({
 
     hints.set(
       DecodeHintType.POSSIBLE_FORMATS,
-      [BarcodeFormat.EAN_13],
+      [BarcodeFormat.EAN_13, BarcodeFormat.EAN_8],
     );
 
     const reader =
