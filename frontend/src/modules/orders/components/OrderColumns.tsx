@@ -46,15 +46,29 @@ export function useOrderColumns(): Column<Order>[] {
       key: "cliente",
       header: "Cliente",
 
-      render: (order) => (
-        <div>
-          {typeof order.cliente === "string"
-            ? order.cliente
-            : order.cliente?.razon_social ??
-              order.cliente?.nombre ??
+      render: (order) => {
+        const cliente = order.cliente ?? order.clientes;
+
+        if (!cliente) {
+          return <div>-</div>;
+        }
+
+        const nombreCompleto = [
+          cliente.nombre,
+          cliente.apellido,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .trim();
+
+        return (
+          <div>
+            {cliente.razon_social?.trim() ||
+              nombreCompleto ||
               "-"}
-        </div>
-      ),
+          </div>
+        );
+      },
     },
 
     {
@@ -120,7 +134,7 @@ export function useOrderColumns(): Column<Order>[] {
           }
 
           onCancel={
-            order.estado === "APROBADA"
+            order.estado === "PENDIENTE"
               ? () =>
                   cancelMutation.mutate(
                     order.id_orden_compra

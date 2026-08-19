@@ -153,11 +153,15 @@ const handleAddProduct = (product: Product) => {
                           type="number"
                           value={field.value ?? ""}
                           disabled={readonly}
-                          onChange={(e) =>
+                          onChange={(e) => {
+                            const value = e.target.value;
                             field.onChange(
-                              Math.max(1, Number(e.target.value))
-                            )
-                          }
+                              value === ""
+                              ? ""
+                              : Math.max(1, Number(value))
+                            );
+                          }} 
+
                         />
                       )}
                     />

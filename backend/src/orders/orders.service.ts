@@ -67,16 +67,18 @@ export class OrdersService {
 
     return orders.map((order) => ({
 
-      ...order,
+  ...order,
 
-      cliente:
-        order.clientes?.razon_social
-          ? order.clientes.razon_social
-          :
-          `${order.clientes?.nombre ?? ''} ${order.clientes?.apellido ?? ''}`.trim(),
+  cliente: order.clientes
+    ? {
+        id_cliente: Number(order.clientes.id_cliente),
+        nombre: order.clientes.nombre,
+        apellido: order.clientes.apellido,
+        razon_social: order.clientes.razon_social,
+      }
+    : null,
 
-    }));
-
+}));
   }
 
 

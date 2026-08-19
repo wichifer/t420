@@ -1,10 +1,9 @@
-// C:\dev\ordenes-saas-frontend\src\modules\orders\components\OrderForm.tsx
-
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 import {
   useForm,
   FormProvider,
+  useWatch,
 } from "react-hook-form";
 
 import { useNavigate } from "react-router-dom";
@@ -25,8 +24,6 @@ import {
   OrderFormFields,
 } from "./OrderFormFields";
 
-// import { useClientes } from "@/modules/clientes/hooks/useClientes";
-
 
 interface Props {
   mode:
@@ -45,7 +42,6 @@ export function OrderForm({
   order,
   onClose,
 }: Props) {
-
 
   const navigate = useNavigate();
 
@@ -67,7 +63,6 @@ export function OrderForm({
     useUpdateOrder();
 
 
-
   const defaultValues: CreateOrderDto = {
     id_cliente: "",
     observaciones: "",
@@ -84,55 +79,27 @@ export function OrderForm({
   const {
     reset,
     handleSubmit,
-    watch,
   } = methods;
 
 
-
-  const items =
-    watch("items");
-
-
-      //const { data: clientes = [] } =  useClientes();
-
-
-
-  // const selectedClient =
-  //   clientes.find(
-  //     (c) =>
-  //       String(c.id_cliente) ===
-  //       String(watch("id_cliente"))
-  //   );
-
-
-  // const esConsumidorFinal =
-  //   selectedClient?.es_consumidor_final === true;
-
+  const items = useWatch({
+    control: methods.control,
+    name: "items",
+  });
 
 
   const subtotal =
-    useMemo(() => {
-
-      return (items || []).reduce(
-        (acc, item) => {
-
-          return (
-            acc +
-            Number(item.cantidad || 0) *
-            Number(item.precio_unitario || 0)
-          );
-
-        },
-        0
-      );
-
-    }, [items]);
-
+    (items || []).reduce(
+      (acc, item) =>
+        acc +
+        Number(item.cantidad || 0) *
+        Number(item.precio_unitario || 0),
+      0
+    );
 
 
   const total =
     subtotal;
-
 
 
   useEffect(() => {
@@ -181,7 +148,6 @@ export function OrderForm({
   ]);
 
 
-
   useEffect(() => {
 
     if (isCreate) {
@@ -198,164 +164,179 @@ export function OrderForm({
   ]);
 
 
-
-
   const onSubmit =
     async (
       values: CreateOrderDto
     ) => {
 
-
-    if (readonly)
-      return;
-
-
-
-    if (
-      !values.id_cliente ||
-      Number(values.id_cliente) <= 0
-    ) {
-
-      alert(
-        "Debe seleccionar un cliente"
-      );
-
-      return;
-
-    }
-
-
-
-    if (
-      !values.items ||
-      values.items.length === 0
-    ) {
-
-      alert(
-        "Debe agregar al menos un producto"
-      );
-
-      return;
-
-    }
-
-
-
-    const itemInvalido =
-      values.items.find(
-        (item) =>
-          Number(item.id_articulo) <= 0 ||
-          Number(item.cantidad) <= 0
+      console.log(
+        "ORDER SUBMIT =>",
+        values
       );
 
 
-    if (itemInvalido) {
-
-      alert(
-        "Todos los productos deben tener una cantidad válida"
-      );
-
-      return;
-
-    }
-
-
-
-    const payload: CreateOrderDto = {
-
-      id_cliente:
-        String(values.id_cliente),
-
-      observaciones:
-        values.observaciones,
-
-
-      // Todas las ventas pasan por aprobación.
-      // Consumidor final será pagada automáticamente
-      // en backend.
-      aprobar_automaticamente:
-        true,
-
-
-      items:
-        values.items.map(
-          (item) => ({
-
-            id_articulo:
-              String(item.id_articulo),
-
-            descripcion_articulo:
-              item.descripcion_articulo,
-
-            cantidad:
-              Number(item.cantidad),
-
-            precio_unitario:
-              Number(item.precio_unitario),
-
-          })
-        ),
-
-    };
-
-
-
-    console.log(
-      "PAYLOAD FINAL",
-      payload
-    );
-
-
-
-    if (
-      isEdit &&
-      order
-    ) {
-
-
-      await updateOrder.mutateAsync({
-
-        id:
-          order.id_orden_compra,
-
-        data:
-          payload,
-
-      });
-
-
-      onClose?.();
-
-
-    } else {
-
-
-
-      const nuevaOrden =
-        await createOrder.mutateAsync(
-          payload
-        );
-
+      if (readonly)
+        return;
 
 
       if (
-        nuevaOrden?.id_orden_compra
+        !values.id_cliente ||
+        Number(values.id_cliente) <= 0
       ) {
 
-        navigate(
-          `/payments?order=${nuevaOrden.id_orden_compra}`
+        alert(
+          "Debe seleccionar un cliente"
         );
+
+        return;
 
       }
 
 
-      onClose?.();
+      if (
+        !values.items ||
+        values.items.length === 0
+      ) {
 
-    }
+        alert(
+          "Debe agregar al menos un producto"
+        );
 
-  };
+        return;
+
+      }
 
 
+      const itemInvalido =
+        values.items.find(
+          (item) =>
+            Number(item.id_articulo) <= 0 ||
+            Number(item.cantidad) <= 0
+        );
+
+
+      if (itemInvalido) {
+
+        alert(
+          "Todos los productos deben tener una cantidad válida"
+        );
+
+        return;
+
+      }
+
+
+      const payload: CreateOrderDto = {
+
+        id_cliente:
+          String(values.id_cliente),
+
+        observaciones:
+          values.observaciones,
+
+        // Todas las ventas pasan por aprobación.
+        // Consumidor final será pagada automáticamente
+        // en backend.
+        aprobar_automaticamente:
+          true,
+
+        items:
+          values.items.map(
+            (item) => ({
+
+              id_articulo:
+                String(item.id_articulo),
+
+              descripcion_articulo:
+                item.descripcion_articulo,
+
+              cantidad:
+                Number(item.cantidad),
+
+              precio_unitario:
+                Number(item.precio_unitario),
+
+            })
+          ),
+
+      };
+
+
+      console.log(
+        "PAYLOAD FINAL",
+        payload
+      );
+
+
+      if (
+        isEdit &&
+        order
+      ) {
+
+        await updateOrder.mutateAsync({
+
+          id:
+            order.id_orden_compra,
+
+          data:
+            payload,
+
+        });
+
+        onClose?.();
+
+      } else {
+
+        const nuevaOrden =
+          await createOrder.mutateAsync(
+            payload
+          );
+
+
+        console.log(
+          "NUEVA ORDEN =>",
+          nuevaOrden
+        );
+
+
+        if (
+          nuevaOrden?.id_orden_compra
+        ) {
+
+          navigate(
+            `/payments?order=${nuevaOrden.id_orden_compra}`
+          );
+
+        }
+
+
+        onClose?.();
+
+      }
+
+    };
+
+
+  const handleContinue =
+    () => {
+
+      console.log(
+        "CONTINUAR A PAGO CLICK"
+      );
+
+      handleSubmit(
+        onSubmit,
+        (errors) => {
+
+          console.log(
+            "ERRORES ORDER",
+            errors
+          );
+
+        }
+      )();
+
+    };
 
 
   return (
@@ -365,19 +346,21 @@ export function OrderForm({
     >
 
       <form
+        className="min-h-full flex flex-col"
         onSubmit={
           handleSubmit(
             onSubmit,
             (errors) => {
+
               console.log(
                 "ERRORES ORDER",
                 errors
               );
+
             }
           )
         }
       >
-
 
         <OrderFormFields
           readonly={
@@ -386,9 +369,9 @@ export function OrderForm({
         />
 
 
+        {/* RESUMEN */}
 
         <div className="mt-6 rounded-lg border p-4 space-y-2">
-
 
           <div className="flex justify-between">
 
@@ -403,7 +386,6 @@ export function OrderForm({
           </div>
 
 
-
           <div className="flex justify-between text-lg font-bold">
 
             <span>
@@ -416,14 +398,12 @@ export function OrderForm({
 
           </div>
 
-
         </div>
 
 
+        {/* FOOTER */}
 
-
-        <div className="sticky bottom-0 left-0 right-0 bg-background border-t p-4 flex gap-3 mt-6">
-
+        <div className="sticky bottom-0 z-20 -mx-4 mt-6 border-t bg-background p-4 flex gap-3">
 
           <Button
             type="button"
@@ -431,28 +411,23 @@ export function OrderForm({
             onClick={onClose}
             className="flex-1"
           >
-
             Cancelar
-
           </Button>
-
-
 
 
           {!readonly && (
 
             <Button
-
-              type="submit"
-
+              type="button"
               disabled={
                 createOrder.isPending ||
                 updateOrder.isPending ||
-                items.length === 0
+                (items?.length ?? 0) === 0
               }
-
+              onClick={
+                handleContinue
+              }
               className="flex-1"
-
             >
 
               {
@@ -465,12 +440,9 @@ export function OrderForm({
 
           )}
 
-
         </div>
 
-
       </form>
-
 
     </FormProvider>
 

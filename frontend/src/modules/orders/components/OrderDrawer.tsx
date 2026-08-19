@@ -1,9 +1,9 @@
 import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 import { useOrderDrawer } from "../hooks/useOrderDrawer";
 import { useOrder } from "../queries/orders.queries";
@@ -28,41 +28,81 @@ export function OrderDrawer() {
     }[mode] ?? "Orden";
 
   return (
-<Drawer
-  open={open}
-  onOpenChange={(value) => {
-    if (!value) close();
-  }}
-  shouldScaleBackground={false}
->
-  <DrawerContent
-    className="h-[100vh] max-h-[100vh] w-full md:max-w-4xl"
-  >
-        <div className="flex h-full flex-col">
-          <DrawerHeader className="shrink-0">
-            <DrawerTitle>{title}</DrawerTitle>
-          </DrawerHeader>
+    <Dialog
+      open={open}
+      onOpenChange={(value) => {
+        if (!value) {
+          close();
+        }
+      }}
+    >
+      <DialogContent
+        showCloseButton={false}
+        className="
+          fixed
+          inset-0
+          top-0
+          left-0
+          translate-x-0
+          translate-y-0
+          w-full
+          h-[100dvh]
+          max-w-none
+          rounded-none
+          p-0
+          gap-0
+          flex
+          flex-col
+          overflow-hidden
+        "
+      >
+        {/* HEADER FIJO */}
+        <DialogHeader
+          className="
+            shrink-0
+            border-b
+            bg-background
+            px-4
+            py-3
+          "
+        >
+          <DialogTitle>
+            {title}
+          </DialogTitle>
+        </DialogHeader>
 
-          {/* Contenido que hace scroll */}
-        <div className="flex-1 overflow-y-auto px-4 pb-24">
-            {mode === "view" ? (
-              isLoading ? (
-                <div className="p-4">
-                  Cargando orden...
-                </div>
-              ) : (
-                <OrderDetails order={order} />
-              )
+        {/* CONTENIDO SCROLLEABLE */}
+        <div
+          className="
+            flex-1
+            min-h-0
+            overflow-y-auto
+            overscroll-contain
+            bg-background
+            px-4
+            pb-6
+          "
+          style={{
+            WebkitOverflowScrolling: "touch",
+          }}
+        >
+          {mode === "view" ? (
+            isLoading ? (
+              <div className="p-4">
+                Cargando orden...
+              </div>
             ) : (
-              <OrderForm
-                mode={mode}
-                order={order ?? null}
-                onClose={close}
-              />
-            )}
-          </div>
+              <OrderDetails order={order} />
+            )
+          ) : (
+            <OrderForm
+              mode={mode}
+              order={order ?? null}
+              onClose={close}
+            />
+          )}
         </div>
-      </DrawerContent>
-    </Drawer>
+      </DialogContent>
+    </Dialog>
   );
 }

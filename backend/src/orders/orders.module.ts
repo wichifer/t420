@@ -1,30 +1,18 @@
 import { Module } from '@nestjs/common';
 
-import { OrdersController }
-from './orders.controller';
+import { OrdersController } from './orders.controller';
+import { OrdersService } from './orders.service';
+import { OrdersPdfService } from './orders-pdf.service';
 
-import { OrdersService }
-from './orders.service';
-
-import { PrismaModule }
-from '../prisma/prisma.module';
-
-import { AuthModule }
-from '../auth/auth.module';
-
-import { AuditModule }
-from '../audit/audit.module';
+import { PrismaModule } from '../prisma/prisma.module';
+import { AuthModule } from '../auth/auth.module';
+import { AuditModule } from '../audit/audit.module';
 
 @Module({
-
   imports: [
-
     PrismaModule,
-
     AuthModule,
-
     AuditModule,
-
   ],
 
   controllers: [
@@ -32,11 +20,8 @@ from '../audit/audit.module';
   ],
 
   providers: [
-
     OrdersService,
-
+    OrdersPdfService,
   ],
-
 })
-
 export class OrdersModule {}
